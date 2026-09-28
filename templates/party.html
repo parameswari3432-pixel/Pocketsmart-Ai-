@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Party & Event Budget Planner - PocketSmart AI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="margin-bottom: 2rem;">
+        <a href="/" style="font-size: 0.85rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+            ← Back to All Planners
+        </a>
+        <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em;">
+            🎉 Party & Event <span class="brand-gradient" style="background: var(--grad-emerald); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Budget Planner</span>
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 1rem;">
+            Optimize per-guest expenses, design thematic catering menus, and orchestrate seamless event day timelines.
+        </p>
+    </div>
+
+    <div class="planner-grid">
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span>🎈</span> Event Details
+                </h2>
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <span id="per-guest-indicator" style="font-size: 0.8rem; font-weight: 700; color: #34D399; background: rgba(16, 185, 129, 0.1); padding: 4px 8px; border-radius: 6px;">
+                        ~$60 / guest
+                    </span>
+                    <select id="currency-select" class="currency-select" style="position: static; font-size: 0.9rem; background: var(--bg-surface); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
+                        <option value="$">USD ($)</option>
+                        <option value="₹">INR (₹)</option>
+                        <option value="€">EUR (€)</option>
+                        <option value="£">GBP (£)</option>
+                        <option value="A$">AUD (A$)</option>
+                    </select>
+                </div>
+            </div>
+
+            <form id="party-form">
+                <!-- Total Budget -->
+                <div class="form-group">
+                    <label class="form-label" for="budget">Total Event Budget</label>
+                    <input type="number" id="budget" name="budget" class="form-input" value="1500" min="50" step="50" required placeholder="1500">
+                </div>
+
+                <!-- Event Type -->
+                <div class="form-group">
+                    <label class="form-label" for="event-type">Event Type</label>
+                    <select id="event-type" name="event_type" class="form-select">
+                        <option value="Birthday Party">Birthday Party</option>
+                        <option value="Cocktail & Dinner Party">Cocktail & Dinner Party</option>
+                        <option value="Baby Shower / Bridal Shower">Baby Shower / Bridal Shower</option>
+                        <option value="Anniversary Celebration">Anniversary Celebration</option>
+                        <option value="Housewarming Party">Housewarming Party</option>
+                        <option value="Graduation Party">Graduation Party</option>
+                        <option value="Holiday / New Year's Bash">Holiday / New Year's Bash</option>
+                    </select>
+                </div>
+
+                <!-- Guest Count -->
+                <div class="form-group">
+                    <label class="form-label" for="guest_count">Estimated Guest Count</label>
+                    <input type="number" id="guest_count" name="guest_count" class="form-input" value="25" min="2" max="1000" step="1">
+                </div>
+
+                <!-- Theme / Vibe -->
+                <div class="form-group">
+                    <label class="form-label" for="theme">Party Theme or Vibe</label>
+                    <input type="text" id="theme" name="theme" class="form-input" value="Tropical Sunset / Neon Glow" placeholder="e.g. Vintage Hollywood, Garden Picnic, Y2K">
+                </div>
+
+                <!-- Venue Setting -->
+                <div class="form-group">
+                    <label class="form-label" for="venue">Venue Setting</label>
+                    <select id="venue" name="venue" class="form-select">
+                        <option value="Home / Backyard">Home / Backyard (Zero Venue Fee)</option>
+                        <option value="Rented Event Hall / Club House">Rented Event Hall / Clubhouse</option>
+                        <option value="Rooftop / Private Dining Room">Rooftop / Private Dining Room</option>
+                        <option value="Outdoor Park / Beach Pavilion">Outdoor Park / Beach Pavilion</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-emerald" style="margin-top: 0.5rem;">
+                    <span>✨ Generate Party Budget & Blueprint</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="party-results">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span>📋</span> Event Masterplan
+                </h2>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-icon">🎉</div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.4rem;">No Party Plan Generated Yet</h3>
+                <p style="font-size: 0.875rem;">Specify your guest count, event style, and budget on the left to get started.</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state">
+                <div class="spinner" style="border-top-color: #10B981;"></div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.4rem;">Curating Party Plan...</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Calculating per-guest allocations, catering courses, and timeline with Gemini AI.</p>
+            </div>
+
+            <!-- Content State -->
+            <div class="content-state" id="party-content" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

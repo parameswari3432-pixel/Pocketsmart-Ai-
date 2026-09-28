@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}PocketSmart AI - Intelligent Budget Planners{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-tag">
+            <span class="status-dot"></span>
+            <span>Gemini AI Planning Suite</span>
+        </div>
+        <h1 class="hero-title">
+            Smart Budgets for <span class="brand-gradient">Living, Celebrating, and Styling</span>
+        </h1>
+        <p class="hero-subtitle">
+            Harness multimodal AI to optimize your interior remodeling costs, throw extraordinary parties within budget, and curate the perfect jewelry matched to your outfits.
+        </p>
+    </section>
+
+    <!-- 3 Core Modules Cards Grid -->
+    <section class="cards-grid">
+        <!-- Module 1: Home Interior -->
+        <div class="module-card interior">
+            <div class="card-icon-wrapper card-icon-interior">
+                🛋️
+            </div>
+            <h2 class="module-title">Home Interior Planner</h2>
+            <p class="module-desc">
+                Plan room remodels and furnishings with AI-driven category splits, color palettes, DIY savings tips, and an itemized shopping blueprint.
+            </p>
+            <ul class="module-features">
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Room square-footage scaling
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Aesthetic style matching (Boho, Japandi, etc.)
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Curated color palette & smart DIY hacks
+                </li>
+            </ul>
+            <a href="/interior" class="btn btn-primary">Launch Interior Planner →</a>
+        </div>
+
+        <!-- Module 2: Party Planner -->
+        <div class="module-card party">
+            <div class="card-icon-wrapper card-icon-party">
+                🎉
+            </div>
+            <h2 class="module-title">Party Budget Planner</h2>
+            <p class="module-desc">
+                Organize unforgettable celebrations with per-guest cost optimization, tailored catering menus, themed decor guides, and day-of timelines.
+            </p>
+            <ul class="module-features">
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Per-guest cost calculator
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Theme-based menu & drink bar ideas
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Event-day run of show & timelines
+                </li>
+            </ul>
+            <a href="/party" class="btn btn-emerald">Launch Party Planner →</a>
+        </div>
+
+        <!-- Module 3: Jewelry Planner with Outfit Vision -->
+        <div class="module-card jewelry">
+            <div class="card-icon-wrapper card-icon-jewelry">
+                💎
+            </div>
+            <h2 class="module-title">Jewelry Budget & Stylist</h2>
+            <p class="module-desc">
+                Upload your event outfit photo to receive AI vision-matched jewelry recommendations, investment piece allocations, and styling do's & don'ts.
+            </p>
+            <ul class="module-features">
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Multimodal outfit photo analysis
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Metal & gemstone buyer's guide
+                </li>
+                <li>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Investment vs fashion jewelry splits
+                </li>
+            </ul>
+            <a href="/jewelry" class="btn btn-amber">Launch Jewelry Stylist →</a>
+        </div>
+    </section>
+
+    <!-- Quick API Key Status Notice -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 1.5rem;">⚡</span>
+            <div>
+                <strong style="font-size: 0.95rem;">Gemini AI Ready</strong>
+                <p style="font-size: 0.82rem; color: var(--text-secondary);">Configure your <code style="font-family: var(--font-mono); color: #A5B4FC;">GEMINI_API_KEY</code> in <code style="font-family: var(--font-mono); color: #A5B4FC;">.env</code> for live real-time LLM inference, or explore with the built-in intelligent planner fallbacks.</p>
+            </div>
+        </div>
+        <span class="api-badge {% if has_api_key %}active{% else %}demo{% endif %}">
+            <span class="status-dot"></span>
+            {% if has_api_key %}API Key Active{% else %}Demo / Fallback Mode{% endif %}
+        </span>
+    </div>
+</div>
+{% endblock %}

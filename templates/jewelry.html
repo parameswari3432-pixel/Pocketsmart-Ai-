@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Jewelry & Outfit Budget Stylist - PocketSmart AI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="margin-bottom: 2rem;">
+        <a href="/" style="font-size: 0.85rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+            ← Back to All Planners
+        </a>
+        <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em;">
+            💎 Jewelry & Outfit <span class="brand-gradient" style="background: var(--grad-amber); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Budget Stylist</span>
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 1rem;">
+            Upload your outfit image or select your occasion to get Gemini multimodal jewelry pairings, metal guides, and budget allocations.
+        </p>
+    </div>
+
+    <div class="planner-grid">
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span>✨</span> Styling Parameters
+                </h2>
+                <select id="currency-select" class="currency-select" style="position: static; font-size: 0.9rem; background: var(--bg-surface); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
+                    <option value="$">USD ($)</option>
+                    <option value="₹">INR (₹)</option>
+                    <option value="€">EUR (€)</option>
+                    <option value="£">GBP (£)</option>
+                    <option value="A$">AUD (A$)</option>
+                </select>
+            </div>
+
+            <form id="jewelry-form" enctype="multipart/form-data">
+                <!-- Total Budget -->
+                <div class="form-group">
+                    <label class="form-label" for="budget">Total Jewelry Budget</label>
+                    <input type="number" id="budget" name="budget" class="form-input" value="2000" min="50" step="50" required placeholder="2000">
+                </div>
+
+                <!-- Occasion -->
+                <div class="form-group">
+                    <label class="form-label" for="occasion">Occasion / Event</label>
+                    <select id="occasion" name="occasion" class="form-select">
+                        <option value="Wedding (Bride / Groom)">Wedding (Bride / Groom)</option>
+                        <option value="Wedding Guest / Bridesmaid" selected>Wedding Guest / Bridesmaid</option>
+                        <option value="Black Tie Gala / Red Carpet">Black Tie Gala / Red Carpet</option>
+                        <option value="Cocktail Party / Reception">Cocktail Party / Reception</option>
+                        <option value="Festive / Traditional Celebration">Festive / Traditional Celebration</option>
+                        <option value="Daily Luxury / Work Capsule">Daily Luxury / Work Capsule</option>
+                    </select>
+                </div>
+
+                <!-- Style Aesthetic -->
+                <div class="form-group">
+                    <label class="form-label" for="style_preference">Aesthetic Preference</label>
+                    <select id="style_preference" name="style_preference" class="form-select">
+                        <option value="Contemporary Minimalist">Contemporary Minimalist (Sleek lines, subtle brilliance)</option>
+                        <option value="Vintage Heirloom & Art Deco">Vintage Heirloom & Art Deco (Intricate filigree, milgrain)</option>
+                        <option value="Opulent Statement & High Glamour">Opulent Statement & High Glamour (Bold neckwear, drops)</option>
+                        <option value="Bohemian & Layered Gemstones">Bohemian & Layered Gemstones (Organic cuts, stacked chains)</option>
+                        <option value="Classic Royalty">Classic Royalty (Pearls, diamonds, solitaires)</option>
+                    </select>
+                </div>
+
+                <!-- Preferred Metals & Stones -->
+                <div class="form-group">
+                    <label class="form-label" for="metals">Preferred Metals / Stones</label>
+                    <input type="text" id="metals" name="metals" class="form-input" value="14k Yellow Gold, Lab Diamonds, Emerald accents" placeholder="e.g. White Gold, Platinum, Rose Gold, Pearls">
+                </div>
+
+                <!-- Optional Outfit Image Upload Dropzone -->
+                <div class="form-group">
+                    <label class="form-label">Optional: Upload Outfit Photo (For Multimodal Vision Match)</label>
+                    <input type="file" id="outfit-file" name="outfit_image" accept="image/*" style="display: none;">
+                    
+                    <div class="dropzone" id="dropzone">
+                        <div class="dropzone-icon">👗</div>
+                        <div class="dropzone-text"><strong>Click to browse</strong> or drag & drop outfit photo</div>
+                        <div class="dropzone-hint">Supports JPG, PNG, WEBP. Gemini will inspect color, neckline & fabric.</div>
+                    </div>
+
+                    <div class="image-preview-container" id="image-preview-container">
+                        <img id="image-preview" class="image-preview" src="" alt="Outfit preview">
+                        <button type="button" class="remove-image-btn" id="remove-image-btn" title="Remove image">✕</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-amber" style="margin-top: 0.5rem;">
+                    <span>✨ Generate Jewelry & Styling Plan</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="jewelry-results">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span>💎</span> Stylist Recommendation
+                </h2>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-icon">💍</div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.4rem;">No Styling Plan Generated Yet</h3>
+                <p style="font-size: 0.875rem;">Set your budget, pick an occasion or upload an outfit photo, and click <strong>Generate Jewelry Plan</strong>.</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state">
+                <div class="spinner" style="border-top-color: #F59E0B;"></div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.4rem;">Styling with Gemini Vision...</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Harmonizing neckline, metal tones, and value ratios for optimal investment and elegance.</p>
+            </div>
+
+            <!-- Content State -->
+            <div class="content-state" id="jewelry-content" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

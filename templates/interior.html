@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Home Interior Budget Planner - PocketSmart AI{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div style="margin-bottom: 2rem;">
+        <a href="/" style="font-size: 0.85rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: 0.5rem;">
+            ← Back to All Planners
+        </a>
+        <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.02em;">
+            🏠 Home Interior <span class="brand-gradient">Budget Planner</span>
+        </h1>
+        <p style="color: var(--text-secondary); font-size: 1rem;">
+            Calculate realistic renovation & decor allocations, curate cohesive color schemes, and generate an itemized shopping list.
+        </p>
+    </div>
+
+    <div class="planner-grid">
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span>⚙️</span> Room Parameters
+                </h2>
+                <select id="currency-select" class="currency-select" style="position: static; font-size: 0.9rem; background: var(--bg-surface); padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-subtle);">
+                    <option value="$">USD ($)</option>
+                    <option value="₹">INR (₹)</option>
+                    <option value="€">EUR (€)</option>
+                    <option value="£">GBP (£)</option>
+                    <option value="A$">AUD (A$)</option>
+                </select>
+            </div>
+
+            <form id="interior-form">
+                <!-- Target Budget -->
+                <div class="form-group">
+                    <label class="form-label" for="budget">Total Target Budget</label>
+                    <div class="input-with-symbol">
+                        <input type="number" id="budget" name="budget" class="form-input" value="5000" min="100" step="50" required placeholder="5000" style="padding-left: 1rem;">
+                    </div>
+                </div>
+
+                <!-- Room Type Radio Chips -->
+                <div class="form-group">
+                    <label class="form-label">Room Type</label>
+                    <div class="chip-group">
+                        <input type="radio" id="room_living" name="room_type" value="Living Room" class="chip-item" checked>
+                        <label for="room_living" class="chip-label">🛋️ Living Room</label>
+
+                        <input type="radio" id="room_bedroom" name="room_type" value="Master Bedroom" class="chip-item">
+                        <label for="room_bedroom" class="chip-label">🛏️ Bedroom</label>
+
+                        <input type="radio" id="room_kitchen" name="room_type" value="Kitchen / Dining" class="chip-item">
+                        <label for="room_kitchen" class="chip-label">🍳 Kitchen</label>
+
+                        <input type="radio" id="room_office" name="room_type" value="Home Office" class="chip-item">
+                        <label for="room_office" class="chip-label">💻 Home Office</label>
+
+                        <input type="radio" id="room_bathroom" name="room_type" value="Bathroom" class="chip-item">
+                        <label for="room_bathroom" class="chip-label">🛁 Bathroom</label>
+                    </div>
+                </div>
+
+                <!-- Style Aesthetic -->
+                <div class="form-group">
+                    <label class="form-label" for="style-select">Design Style & Aesthetic</label>
+                    <select id="style-select" name="style" class="form-select">
+                        <option value="Modern Minimalist">Modern Minimalist (Clean lines, functional, uncluttered)</option>
+                        <option value="Japandi & Zen">Japandi & Zen (Warm woods, organic elements, neutral tones)</option>
+                        <option value="Boho Chic & Textured">Boho Chic & Textured (Rattan, layered rugs, earth tones)</option>
+                        <option value="Industrial Loft">Industrial Loft (Exposed metal, concrete, dark accents)</option>
+                        <option value="Mid-Century Modern">Mid-Century Modern (Retro silhouettes, teak finishes)</option>
+                        <option value="Contemporary Luxury">Contemporary Luxury (Velvet, marble, brushed brass)</option>
+                        <option value="Scandinavian Light">Scandinavian Light (White walls, pale woods, cozy hygge)</option>
+                    </select>
+                </div>
+
+                <!-- Approximate Square Footage -->
+                <div class="form-group">
+                    <label class="form-label" for="sqft">Room Size (Square Feet)</label>
+                    <input type="number" id="sqft" name="sqft" class="form-input" value="250" min="20" max="10000" step="10">
+                </div>
+
+                <!-- Priority Focus -->
+                <div class="form-group">
+                    <label class="form-label" for="priorities">Budget Allocation Priority</label>
+                    <select id="priorities" name="priorities" class="form-select">
+                        <option value="balanced">Balanced (Standard even distribution)</option>
+                        <option value="furniture_heavy">High-Quality Furniture First (Invest in durable sofa/bed)</option>
+                        <option value="lighting_ambience">Lighting & Ambience Focus (Smart lights, accent fixtures)</option>
+                        <option value="budget_diy">Maximum DIY & Value (Thrift hacks & paint upgrades)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top: 0.5rem;">
+                    <span>✨ Generate Interior Budget Plan</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="interior-results">
+            <div class="panel-header">
+                <h2 class="panel-title">
+                    <span>📋</span> AI Planner Blueprint
+                </h2>
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state">
+                <div class="empty-icon">🛋️</div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.4rem;">No Plan Generated Yet</h3>
+                <p style="font-size: 0.875rem;">Configure your room type, style, and budget on the left, then click <strong>Generate Interior Budget Plan</strong>.</p>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.4rem;">Architecting Interior Plan...</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary);">Analyzing space dimensions, cost breakdowns, and aesthetic palettes with Gemini AI.</p>
+            </div>
+
+            <!-- Content State -->
+            <div class="content-state" id="interior-content" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

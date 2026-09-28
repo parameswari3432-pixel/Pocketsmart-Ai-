@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PocketSmart AI - Smart Budget & Lifestyle Planners{% endblock %}</title>
+    <meta name="description" content="AI-powered budget planners for home interiors, events & parties, and jewelry styling. Get intelligent cost allocations and expert recommendations.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="/" class="brand-logo">
+                <div class="brand-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <span>PocketSmart <span class="brand-gradient">AI</span></span>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li>
+                        <a href="/" class="nav-link {% if active_tab == 'home' %}active{% endif %}">
+                            <span>Overview</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/interior" class="nav-link {% if active_tab == 'interior' %}active{% endif %}">
+                            <span>🏠 Interior</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/party" class="nav-link {% if active_tab == 'party' %}active{% endif %}">
+                            <span>🎉 Party</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/jewelry" class="nav-link {% if active_tab == 'jewelry' %}active{% endif %}">
+                            <span>💎 Jewelry</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 PocketSmart AI. Powered by Google Gemini AI. Crafted for smart lifestyle planning.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="/static/js/main.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
